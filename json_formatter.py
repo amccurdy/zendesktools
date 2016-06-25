@@ -28,7 +28,7 @@ for u in users_all:
 if len(end_users) > 0:
     print 'Username, Email, Last Login'
     for username, data in end_users.iteritems():
-        username = username.encode('utf-8').strip()
-        email = data['email'].encode('utf-8').strip()
-        last_login_at = data['last_login_at'].encode('utf-8').strip()
+        username = username.encode('utf-8').strip().replace(',','')
+        email = data['email'].encode('utf-8').strip().replace(',','')
+        last_login_at = data['last_login_at'].encode('utf-8').strip().replace(',','').split('T')[0]
         print '%s, %s, %s' % (username, email, last_login_at)
