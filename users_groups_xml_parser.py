@@ -8,9 +8,11 @@ users_list = []
 active_orgs_dict = {}
 merged_users_orgs = {}
 
+reporttype = 'all_users'
+
 for user in users_root.findall('user'):
     user_dict = {}
-	# this will be either 'support_portal' or None, which is why I'm not bothering to evaluate the actual text
+    # this will be either 'support_portal' or None, which is why I'm not bothering to evaluate the actual text
     if user.find('current-tags').text:
         user_dict['name'] = user.find('name').text
         user_dict['email'] = user.find('email').text
@@ -36,3 +38,17 @@ for user in users_list:
             merged_users_orgs[org] = [user_entry]
         else:
             merged_users_orgs[org].append(user_entry)
+
+
+# this is kind of silly but lets me display customers alphabetically
+sorted_customers = merged_users_orgs.keys()
+sorted_customers.sort()
+
+if reporttype == 'auth_contacts':
+    for org in sorted_customers:
+        print '%s|%s' % (org, len(merged_users_orgs[org]))
+elif reporttype == 'all_users':
+    print 'Customer|User_Name|Email|Last_Login|Is_Active'
+    for org in sorted_customers:
+        for customer in merged_users_orgs[org]:
+            print '%s|%s|%s|%s|%s' % (org, customer[0], customer[1], customer[2], customer[3])
