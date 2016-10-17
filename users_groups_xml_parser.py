@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from xml.etree import ElementTree
 users = ElementTree.parse('users.xml')
 orgs = ElementTree.parse('organizations.xml')
@@ -51,4 +52,7 @@ elif reporttype == 'all_users':
     print 'Customer|User_Name|Email|Last_Login|Is_Active'
     for org in sorted_customers:
         for customer in merged_users_orgs[org]:
-            print '%s|%s|%s|%s|%s' % (org, customer[0], customer[1], customer[2], customer[3])
+            try:
+                print '%s|%s|%s|%s|%s' % (org, customer[0], customer[1], customer[2], customer[3])
+            except UnicodeEncodeError:
+                print '%s|%s|%s|%s|%s' % (org.decode('iso-8859-1'), customer[0].decode('iso-8859-1'), customer[1].decode('iso-8859-1'), customer[2].decode('iso-8859-1'), customer[3].decode('iso-8859-1'))
