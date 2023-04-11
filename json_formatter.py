@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import json
 
 file = open('users.json', 'r')
@@ -15,7 +15,7 @@ for u in users_all:
     if u['role'] == 'end-user':
         if u['suspended'] == False and 'suspended' not in u['name'].lower():
             if u['user_fields']['support_portal'] == True:
-                if u['last_login_at'] != None and u['last_login_at'].startswith('2016'):
+                if u['last_login_at'] != None:
                     try:
                         name = u['name']
                         email = u['email']
@@ -26,9 +26,9 @@ for u in users_all:
                         pass
 
 if len(end_users) > 0:
-    print 'Username, Email, Last Login'
-    for username, data in end_users.iteritems():
-        username = username.encode('utf-8').strip().replace(',','')
-        email = data['email'].encode('utf-8').strip().replace(',','')
-        last_login_at = data['last_login_at'].encode('utf-8').strip().replace(',','').split('T')[0]
-        print '%s, %s, %s' % (username, email, last_login_at)
+    print('Username, Email, Last Login')
+    for username, data in end_users.items():
+        username = username.strip().replace(',','')
+        email = data['email'].strip().replace(',','')
+        last_login_at = data['last_login_at'].strip().replace(',','').split('T')[0]
+        print (username, ',', email, ',', last_login_at)
